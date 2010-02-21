@@ -1,0 +1,70 @@
+-*- mode: outline; -*-
+
+* Dependencies and installation
+
+See the INSTALL file.
+
+* Usage
+
+There is no real documentation written yet, so ask questions, read the
+code.  The following should hopefully get you started, though.
+
+** Creating a connection instance
+
+You create a client instance like this:
+(setf con (make-instance jabber:client
+      	  		 :router-host "example.com"
+			 :router-port 5222
+			 :username "foo"
+			 :server "example.com"
+			 :password "secret"))
+
+Note the difference between router-host and server.  router-host is
+the physical hostname or IP address to connect to, while server is the
+domain part of the JID.  These are usually the same.
+
+Or if you want a component:
+(setf con (make-instance jabber:component
+      	  		 :router-host "localhost"
+			 :router-port 5347
+			 :jid "mycomponent.example.com"
+			 :secret "secret"))
+
+This example is appropriate for a jabberd2 server running on the same
+computer as the component.
+
+The client and component classes differ only in how they authenticate
+with the server.
+
+** Connecting
+
+(jabber:connect con)
+
+This will open a network connection to the server, send the start tag,
+and do those parts of authentication that do not require waiting for
+the server to answer.
+
+** Handling incoming data
+
+(jabber:read-and-act con :block t) will wait for an incoming stanza
+and process it.  Setting block to nil makes the function return
+immediately if there is no waiting data.
+
+Thus, a simple event loop:
+(loop (jabber:read-and-act con :block t))
+
+A slightly more complex example:
+(loop do (jabber:read-and-act con :block t)
+      until (jabber:connection-authenticated-p con))
+;; do something
+(loop do (jabber:read-and-act con :block t)
+      until (done-p))
+
+* Contact
+
+You can reach the primary author, Magnus Henoch, by e-mail,
+mange@freemail.hu, or by Jabber, legoscia@jabber.cd.chalmers.se.
+
+There may be some information at http://stor.no-ip.org/drupal/ .
+
+;;; arch-tag: fef30208-ba36-11d9-ab9e-000a95c2fcd0

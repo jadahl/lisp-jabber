@@ -1,0 +1,52 @@
+-*- mode: outline; -*-
+
+* Dependencies
+
+lisp-jabber has a couple of dependencies.  First, you need ASDF to put
+all the pieces together.  See http://www.cliki.net/asdf for details;
+basically, you make your Lisp load ASDF every time it starts, push a
+directory of your choice onto asdf:*central-registry*, and symlink
+all *.asd files into that directory.
+
+Unless you use CLISP or SBCL, lisp-jabber uses CLOCC-PORT for
+networking.  The version found at http://clocc.sf.net uses
+mk-defsystem instead of ASDF, so get the Debian version from
+http://packages.debian.org/cl-port instead.
+
+You need XMLS (see http://www.cliki.net/xmls), along with a patch for
+parsing only start tags.  This version is available in Arch archive
+mange@freemail.hu--2005/xmls--devo--1.2 (see below).
+
+You need SB-SHA1 (see http://www.cliki.net/sb-sha1).  It can be
+installed with ASDF-INSTALL.
+
+You need CL-BASE64 (see http://www.cliki.net/cl-base64).  It can be
+installed with ASDF-INSTALL.
+
+If you want to use the client part of lisp-jabber, you need the SASL
+library in mange@freemail.hu--2005/cl-sasl--devo--0.1.
+
+When you have installed all this, you can type in the REPL:
+
+(asdf:operate 'asdf:load-op :jabber-component)
+or
+(asdf:operate 'asdf:load-op :jabber-client)
+
+which should compile and load the respective part of lisp-jabber along
+with all dependencies.
+
+* Arch archives
+
+GNU Arch is a version control system.  For more information see
+http://wiki.gnuarch.org/.
+
+The URL of the archive mange@freemail.hu--2005 is
+http://www.dtek.chalmers.se/~henoch/archive-2005/.  That's where much
+of this code is stored.
+
+* Contact
+
+You can reach the primary author, Magnus Henoch, by e-mail,
+mange@freemail.hu, or by Jabber, legoscia@jabber.cd.chalmers.se.
+
+;;; arch-tag: 033222cc-9f93-11d9-80d3-000a95c2fcd0
